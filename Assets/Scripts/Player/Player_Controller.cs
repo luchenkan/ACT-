@@ -3,15 +3,13 @@ using UnityEngine;
 
 public enum PlayerState
 {
+    None,
     Player_Move,
     Player_Attack,
 }
 
-public class Player_Controller : FSMController
+public class Player_Controller : FSMController<PlayerState>
 {
-    private PlayerState state;
-    public override Enum curState { get => state; set => state = (PlayerState)value; }
-
     public Player_Input input { get; private set; }
     public new Player_Audio audio { get; private set; }
     public Player_Model model { get; private set; }
@@ -27,6 +25,11 @@ public class Player_Controller : FSMController
         characterController = GetComponent<CharacterController>();
 
         // 初始化移动状态
-        UpdateState(PlayerState.Player_Move, true);
+        UpdateState<Player_Move>(PlayerState.Player_Move, true);
+    }
+
+    public bool CheckAttack()
+    {
+        return input.GetAttackKey();
     }
 }

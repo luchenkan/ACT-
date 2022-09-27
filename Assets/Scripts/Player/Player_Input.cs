@@ -27,6 +27,6 @@ public class Player_Input
 
     public bool GetAttackKey()
     {
-        return GetKey(attackKeyCode);
+        return GetKeyDown(attackKeyCode);
     }
 }

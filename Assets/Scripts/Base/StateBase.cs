@@ -4,18 +4,14 @@ using UnityEngine;
 /// <summary>
 /// 状态基类
 /// </summary>
-public abstract class StateBase
+public abstract class StateBase<T>
 {
     // 当前状态
-    public Enum stateType;
+    public T stateType;
 
-    // 当前控制单元
-    public FSMController controller;
-
-    public virtual void Init(Enum state, FSMController controller)
+    public virtual void Init(T state,FSMController<T> controller)
     {
         this.stateType = state;
-        this.controller = controller;
     }
 
     public abstract void OnEnter();

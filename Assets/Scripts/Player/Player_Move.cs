@@ -1,14 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
-public class Player_Move : StateBase
+public class Player_Move : StateBase<PlayerState>
 {
     public Player_Controller player;
-    public float moveSpeed = 1f;
-    public float rotateSpeed = 0.2f;
+    public float moveSpeed = 10f;
+    public float rotateSpeed = 30f;
     private float runTran = 0;
 
     public override void OnEnter()
@@ -42,17 +38,13 @@ public class Player_Move : StateBase
             runTran -= Time.deltaTime / 2;
         }
 
-        if(IsRun())
-        {
-            
-        }
         Move(h, v + runTran);
     }
 
     private bool IsRun()
     {
         var temp = player.input.GetRunKey() && player.input.Vertical > 0;
-        moveSpeed = temp ? 2f : 1f;
+        moveSpeed = temp ? 20f : 10f;
         return temp;
     }
 
@@ -65,13 +57,19 @@ public class Player_Move : StateBase
 
         // 旋转
         var rot = new Vector3(0, h, 0);
-        player.transform.Rotate(rot);
+        player.transform.Rotate(rot * rotateSpeed * Time.deltaTime);
 
         // 模型的动画同步
         player.model.UpdateMove(h, v);
+
+        // 检测攻击事件
+        if(player.CheckAttack())
+        {
+            player.UpdateState<Player_Attack>(PlayerState.Player_Attack);
+        }
     }
 
-    public override void Init(Enum state, FSMController controller)
+    public override void Init(PlayerState state, FSMController<PlayerState> controller)
     {
         base.Init(state, controller);
 

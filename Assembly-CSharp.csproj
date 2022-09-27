@@ -60,6 +60,8 @@
     <Compile Include="Assets\Scripts\Player\Player_Audio.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Move.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Model.cs" />
+    <Compile Include="Assets\Scripts\Player\Player_Attack.cs" />
+    <Compile Include="Assets\Scripts\WeaponCollider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -635,8 +637,14 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>E:\Program Files (x86)\Unity\2020.3.30f1c1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
