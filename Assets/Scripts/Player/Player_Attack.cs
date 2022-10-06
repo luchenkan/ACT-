@@ -9,7 +9,7 @@ public class Player_Attack : StateBase<PlayerState>
     public override void OnEnter()
     {
         // ¹¥»÷
-        Attack();
+        player.Attack();
     }
 
     public override void OnLeave()
@@ -19,7 +19,19 @@ public class Player_Attack : StateBase<PlayerState>
 
     public override void OnUpdate()
     {
-        
+        // ¼ì²â¶þ¶Î¹¥
+        if(player.CheckAttack())
+        {
+            player.Attack();
+        }
+
+        // ×ªÏò
+        if(player.CurrSkillData.releaseModel.canRotate)
+        {
+            // Ðý×ª
+            var rot = new Vector3(0, player.input.Horizeontal, 0);
+            player.transform.Rotate(rot * 60 * Time.deltaTime);
+        }
     }
 
     public override void Init(PlayerState state, FSMController<PlayerState> controller)
@@ -27,10 +39,5 @@ public class Player_Attack : StateBase<PlayerState>
         base.Init(state, controller);
 
         player = controller as Player_Controller;
-    }
-
-    public void Attack()
-    {
-        player.model.Attack();
     }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 public class Player_Move : StateBase<PlayerState>
 {
     public Player_Controller player;
-    public float moveSpeed = 10f;
-    public float rotateSpeed = 30f;
+    public float moveSpeed = 3f;
+    public float rotateSpeed = 40f;
     private float runTran = 0;
 
     public override void OnEnter()
@@ -26,16 +26,16 @@ public class Player_Move : StateBase<PlayerState>
         {
             if(IsRun() && runTran < 1)
             {
-                runTran += Time.deltaTime / 2;
+                runTran += Time.deltaTime;
             }
             else if(!IsRun() && runTran > 0)
             {
-                runTran -= Time.deltaTime / 2;
+                runTran -= Time.deltaTime;
             }
         }
         else if(runTran > 0)
         {
-            runTran -= Time.deltaTime / 2;
+            runTran -= Time.deltaTime;
         }
 
         Move(h, v + runTran);
@@ -44,7 +44,7 @@ public class Player_Move : StateBase<PlayerState>
     private bool IsRun()
     {
         var temp = player.input.GetRunKey() && player.input.Vertical > 0;
-        moveSpeed = temp ? 20f : 10f;
+        moveSpeed = temp ? 6 : 3f;
         return temp;
     }
 

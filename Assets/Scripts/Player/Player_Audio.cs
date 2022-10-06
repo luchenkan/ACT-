@@ -16,6 +16,9 @@ public class Player_Audio
     /// </summary>
     public void PlayOneShot(AudioClip audioClip)
     {
+        if (audioClip == null)
+            return;
+
         audioSource.PlayOneShot(audioClip);
     }
 }

@@ -62,13 +62,6 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.988915
-        functionName: SkillOver
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.45896226
         functionName: StartSkillHit
         data: 
@@ -79,6 +72,20 @@ ModelImporter:
       - time: 0.6669811
         functionName: StopSkillHit
         data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.77456516
+        functionName: SkillCanSwitch
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.988915
+        functionName: SkillOver
+        data: "\u666E\u653B1"
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
