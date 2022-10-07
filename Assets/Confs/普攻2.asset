@@ -19,6 +19,9 @@ MonoBehaviour:
   - target: {x: 0, y: -0.2, z: 0}
     time: 0.3
     backTime: 0.2
+  characterMoveModels:
+  - target: {x: 0, y: 0, z: 0.5}
+    time: 0.3
   releaseModel:
     spawnObj:
       prefab: {fileID: 0}

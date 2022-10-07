@@ -106,6 +106,12 @@ public class Player_Model : MonoBehaviour
         player.CameraMoveForAttack(model.target, model.time, model.backTime);
     }
 
+    private void CharacterMoveForAttack(int index)
+    {
+        var model = skillData.characterMoveModels[index];
+        player.CharacterAttackMove(model.target, model.time);
+    }
+
     #endregion
 
     /// <summary>

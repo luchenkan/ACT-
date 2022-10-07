@@ -2,6 +2,7 @@
 using UnityEngine;
 using Cinemachine;
 using DG.Tweening;
+using System.Collections;
 
 public enum PlayerState
 {
@@ -94,5 +95,25 @@ public class Player_Controller : FSMController<PlayerState>
         cameraTarget.DOLocalMove(cameraPos + offset, time).onComplete = () => {
             cameraTarget.DOLocalMove(cameraPos,backTime);
         };
+    }
+
+    /// <summary>
+    /// 角色攻击移动
+    /// </summary>
+    public void CharacterAttackMove(Vector3 target,float time)
+    {
+        StartCoroutine(DoCharacterAttackMove(transform.TransformDirection(target),time));
+    }
+    IEnumerator DoCharacterAttackMove(Vector3 target, float time)
+    {
+        float currTime = 0;
+        while(currTime < time)
+        {
+            var moveDir = target * Time.deltaTime / time;
+            characterController.Move(moveDir);
+            currTime += Time.deltaTime;
+            // 停一帧
+            yield return null;
+        }
     }
 }

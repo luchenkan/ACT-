@@ -18,6 +18,8 @@ public class Conf_SkillData : ScriptableObject
     // 相机位移的数据-集合
     public CameraMoveModel[] cameraMoveModels;
 
+    public CharacterMoveModel[] characterMoveModels;
+
     // 释放数据
     public Skill_ReleaseModel releaseModel;
 
@@ -95,4 +97,18 @@ public class CameraMoveModel
 
     // 回归时间
     public float backTime;
+}
+
+/// <summary>
+/// 一次角色位移的全部数据
+/// </summary>
+[Serializable]
+public class CharacterMoveModel
+{
+    // 偏移的程度（点）
+    public Vector3 target;
+    // 时间
+    public float time; 
+    // 回归时间
+    
 }

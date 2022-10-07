@@ -301,3 +301,10 @@ F:\ACT\ACT-\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 F:\ACT\ACT-\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 F:\ACT\ACT-\obj\Debug\Assembly-CSharp.dll
 F:\ACT\ACT-\obj\Debug\Assembly-CSharp.pdb
+F:\ACT\ACT-\Temp\Bin\Debug\DOTween.dll
+F:\ACT\ACT-\Temp\Bin\Debug\Unity.Postprocessing.Editor.dll
+F:\ACT\ACT-\Temp\Bin\Debug\Unity.Postprocessing.Runtime.dll
+F:\ACT\ACT-\Temp\Bin\Debug\Assembly-CSharp-firstpass.pdb
+F:\ACT\ACT-\Temp\Bin\Debug\DOTween.xml
+F:\ACT\ACT-\Temp\Bin\Debug\Unity.Postprocessing.Runtime.pdb
+F:\ACT\ACT-\Temp\Bin\Debug\Unity.Postprocessing.Editor.pdb
