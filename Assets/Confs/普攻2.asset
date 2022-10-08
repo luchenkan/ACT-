@@ -30,13 +30,13 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     audioClip: {fileID: 8300000, guid: b2432d1254e131541b104851e2a54f7f, type: 3}
     canRotate: 1
-  hitModel:
-    damageVal: 10
+  hitModels:
+  - damageVal: 10
     hardTime: 1
-    repelVelocity: {x: 0, y: 0.2, z: 0.2}
+    repelVelocity: {x: 0, y: 0.3, z: 0.3}
     repelTransitionTime: 0.2
     needScreenImpulse: 1
-    needChromaticAberration: 0
+    needChromaticAberration: 1
     skillHitEF: {fileID: 11400000, guid: 37cc87752a2d14b4f83f0561fb12a8ef, type: 2}
   endModel:
     spawnObj:

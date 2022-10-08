@@ -3,6 +3,7 @@ using UnityEngine;
 using Cinemachine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.Events;
 
 public enum PlayerState
 {
@@ -30,6 +31,9 @@ public class Player_Controller : FSMController<PlayerState>
     public Conf_SkillData[] attackConfs;
     // 当前技能
     public Conf_SkillData CurrSkillData { get; private set; }
+
+    // 技能数据
+    public SkillModel[] skillModels;
 
     // 当前所属普攻配置
     private int currAttackIndex = 0;
@@ -61,21 +65,53 @@ public class Player_Controller : FSMController<PlayerState>
         UpdateState<Player_Move>(PlayerState.Player_Move, true);
     }
 
-    public bool CheckAttack()
-    {
-        return input.GetAttackKey() && model.canSwitch;
-    }
-
     public void PlayAudio(AudioClip clip)
     {
         audio.PlayOneShot(clip);
     }
 
+    public bool CheckAttack()
+    {
+        if(input.GetAttackKey() && model.canSwitch)
+        {
+            CurrSkillData = attackConfs[CurrAttackIndex];
+            attackAction = StandAttack;
+            return true;
+        }
+
+        for(int i = 0; i < skillModels.Length; ++i)
+        {
+            if(input.GetKeyDown(skillModels[i].keyCode) && model.canSwitch)
+            {
+                CurrSkillData = skillModels[i].skillData;
+                attackAction = SkillAttack;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private UnityAction attackAction;
     public void Attack()
     {
-        model.Attack(attackConfs[CurrAttackIndex]);
-        CurrSkillData = attackConfs[CurrAttackIndex];
+        attackAction?.Invoke();
+    }
+
+    private void StandAttack()
+    {
+        model.Attack(CurrSkillData);
         ++CurrAttackIndex;
+    }
+
+    /// <summary>
+    /// 技能攻击
+    /// </summary>
+    private void SkillAttack()
+    {
+        model.Attack(CurrSkillData);
+        // 技能是否会打断这个普攻的顺序
+        CurrAttackIndex = 0;
     }
 
     /// <summary>

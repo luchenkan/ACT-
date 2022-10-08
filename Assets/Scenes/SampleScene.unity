@@ -488,7 +488,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.098537594, y: 0.000000015224735, z: -0.000000001507545, w: 0.99513334}
+  m_LocalRotation: {x: 0.098537594, y: 0.000000017649615, z: -0.0000000017476555, w: 0.99513334}
   m_LocalPosition: {x: 7.087782, y: 2.12, z: -8.684157}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -650,7 +650,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234826333}
-  m_LocalRotation: {x: 0.098537594, y: 0.000000015224735, z: -0.000000001507545, w: 0.99513334}
+  m_LocalRotation: {x: 0.098537594, y: 0.000000017649615, z: -0.0000000017476555, w: 0.99513334}
   m_LocalPosition: {x: 7.087782, y: 2.12, z: -8.684157}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -994,10 +994,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5050842070245854971, guid: 73bda5441673cd943b2bf413ba03e563, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.42
+    - target: {fileID: 5050842070509280802, guid: 73bda5441673cd943b2bf413ba03e563, type: 3}
+      propertyPath: attackConfs.Array.size
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5050842070509280802, guid: 73bda5441673cd943b2bf413ba03e563, type: 3}
+      propertyPath: skillModels.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050842070509280802, guid: 73bda5441673cd943b2bf413ba03e563, type: 3}
+      propertyPath: attackConfs.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: ceeb223535db89e42a45da19cf7ca196, type: 2}
+    - target: {fileID: 5050842070509280802, guid: 73bda5441673cd943b2bf413ba03e563, type: 3}
+      propertyPath: skillModels.Array.data[0].keyCode
+      value: 107
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050842070509280802, guid: 73bda5441673cd943b2bf413ba03e563, type: 3}
+      propertyPath: skillModels.Array.data[0].skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7cf248fb6435e6249bb60e62a4e2f0b3, type: 2}
     - target: {fileID: 5050842070509280812, guid: 73bda5441673cd943b2bf413ba03e563, type: 3}
       propertyPath: m_RootOrder
       value: 3

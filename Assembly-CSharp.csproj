@@ -86,9 +86,10 @@
     <Compile Include="Assets\Scripts\Player\Player_Attack.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\WFX_Demo_New.cs" />
+    <Compile Include="Assets\Scripts\Conf\SkillModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Art\场景\Casual Tiny Environment - Jungle Set\Readme.txt" />
+    <None Include="Assets\Art\GroundScenes\Casual Tiny Environment - Jungle Set\Readme.txt" />
     <None Include="Assets\Art\JMO par Assets\WarFX\Shaders\WFX_S Multiply Soft.shader" />
     <None Include="Assets\Art\JMO par Assets\WarFX\Shaders\WFX_S Multiply Soft Scroll.shader" />
     <None Include="Assets\Art\JMO par Assets\WarFX\_Effects\MuzzleFlashes\!MuzzleFlash Differences.txt" />

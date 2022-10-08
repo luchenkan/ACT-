@@ -9,7 +9,7 @@ public class Player_Model : MonoBehaviour
 {
     private Player_Controller player;
     private Animator animator;
-    public WeaponCollider boxCollider;
+    public WeaponCollider[] boxColliders;
 
     // 当前技能数据
     private Conf_SkillData skillData;
@@ -21,7 +21,10 @@ public class Player_Model : MonoBehaviour
     {
         this.player = player;
         animator = GetComponent<Animator>();
-        boxCollider.Init(this);
+        for(int i = 0; i < boxColliders.Length; ++i)
+        {
+            boxColliders[i].Init(this);
+        }
     }
 
     public void PlayAudio(AudioClip audioClip)
@@ -38,6 +41,7 @@ public class Player_Model : MonoBehaviour
 
     public void Attack(Conf_SkillData conf)
     {
+        currHitIndex = 0;
         skillData = conf;
         canSwitch = false;
         animator.SetTrigger(conf.triggerName);
@@ -71,10 +75,12 @@ public class Player_Model : MonoBehaviour
         player.UpdateState<Player_Move>(PlayerState.Player_Move);
     }
 
-    private void StartSkillHit()
+    private int currHitIndex = 0;
+    private void StartSkillHit(int weaponIndex)
     {
         // 开启伤害检测
-        boxCollider.StartSkillHit(skillData.hitModel);
+        boxColliders[weaponIndex].StartSkillHit(skillData.hitModels[currHitIndex]);
+        ++currHitIndex;
 
         // 生成释放时的游戏物体/粒子
         SpawnObject(skillData.releaseModel.spawnObj);
@@ -83,9 +89,9 @@ public class Player_Model : MonoBehaviour
         PlayAudio(skillData.releaseModel.audioClip);
     }
 
-    private void StopSkillHit()
+    private void StopSkillHit(int weaponIndex)
     {
-        boxCollider.StopSkillHit();
+        boxColliders[weaponIndex].StopSkillHit();
     }
 
     /// <summary>
@@ -110,6 +116,11 @@ public class Player_Model : MonoBehaviour
     {
         var model = skillData.characterMoveModels[index];
         player.CharacterAttackMove(model.target, model.time);
+    }
+
+    private void CharacterMoveForAttack()
+    {
+
     }
 
     #endregion
