@@ -69,6 +69,7 @@
     <Compile Include="Assets\Art\MeleeWeaponTrail\Scripts\Interpolate.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
     <Compile Include="Assets\Art\MeleeWeaponTrail\Example\Scripts\LookAtTarget.cs" />
+    <Compile Include="Assets\Scripts\Skill2_Controller.cs" />
     <Compile Include="Assets\Scripts\Monster\Monster_Controller.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Input.cs" />
     <Compile Include="Assets\Art\MeleeWeaponTrail\Example\Scripts\SwooshTest.cs" />
@@ -83,10 +84,10 @@
     <Compile Include="Assets\Scripts\Conf\Conf_SkillData.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Model.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\WFX_Demo_Wall.cs" />
+    <Compile Include="Assets\Scripts\Conf\SkillModel.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Attack.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\WFX_Demo_New.cs" />
-    <Compile Include="Assets\Scripts\Conf\SkillModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art\GroundScenes\Casual Tiny Environment - Jungle Set\Readme.txt" />

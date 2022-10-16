@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1faba4abe0445cf41afada8c4b650ddd, type: 3}
+  m_Name: "\u6280\u80FD2"
+  m_EditorClassIdentifier: 
+  name: "\u6280\u80FD2"
+  triggerName: "\u6280\u80FD2"
+  overTriggerName: "\u6280\u80FD\u7ED3\u675F"
+  cameraMoveModels: []
+  characterMoveModels: []
+  spawnObjs:
+  - prefab: {fileID: 2340902016947638614, guid: 13a559395d18eab499d440bb54bf3982, type: 3}
+    audioClip: {fileID: 0}
+    position: {x: 0, y: 0, z: 0.5}
+    rotation: {x: 0, y: 0, z: 0}
+  releaseModel:
+    spawnObj:
+      prefab: {fileID: 0}
+      audioClip: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    audioClip: {fileID: 8300000, guid: cf1881c3734a76648bfebd0167404e3b, type: 3}
+    canRotate: 1
+  hitModels: []
+  endModel:
+    spawnObj:
+      prefab: {fileID: 0}
+      audioClip: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}

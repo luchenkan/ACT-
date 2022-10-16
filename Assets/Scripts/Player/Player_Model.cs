@@ -45,9 +45,15 @@ public class Player_Model : MonoBehaviour
         skillData = conf;
         canSwitch = false;
         animator.SetTrigger(conf.triggerName);
+
+        /////////注意此处属于释放时的技能
+        // 单次攻击生成
+        SpawnObject(skillData.releaseModel.spawnObj);
+        // 音效
+        PlayAudio(skillData.releaseModel.audioClip);
     }
 
-    private void SpawnObject(Skill_SpawnObj spawn)
+    public void SpawnObject(Skill_SpawnObj spawn)
     {
         if (spawn != null && spawn.prefab != null)
         {
@@ -80,13 +86,14 @@ public class Player_Model : MonoBehaviour
     {
         // 开启伤害检测
         boxColliders[weaponIndex].StartSkillHit(skillData.hitModels[currHitIndex]);
-        ++currHitIndex;
 
-        // 生成释放时的游戏物体/粒子
-        SpawnObject(skillData.releaseModel.spawnObj);
+        // 单次攻击生成
+        SpawnObject(skillData.hitModels[currHitIndex].spawnObj);
 
         // 音效
-        PlayAudio(skillData.releaseModel.audioClip);
+        PlayAudio(skillData.hitModels[currHitIndex].audioClip);
+
+        ++currHitIndex;
     }
 
     private void StopSkillHit(int weaponIndex)
@@ -118,9 +125,13 @@ public class Player_Model : MonoBehaviour
         player.CharacterAttackMove(model.target, model.time);
     }
 
-    private void CharacterMoveForAttack()
+    /// <summary>
+    /// 生成游戏对象（具体某一个索引）
+    /// </summary>
+    /// <param name="index"></param>
+    private void SpawnObj(int index)
     {
-
+        SpawnObject(skillData.spawnObjs[index]);
     }
 
     #endregion

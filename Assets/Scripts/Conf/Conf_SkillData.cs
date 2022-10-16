@@ -20,6 +20,9 @@ public class Conf_SkillData : ScriptableObject
 
     public CharacterMoveModel[] characterMoveModels;
 
+    // 技能过程中生成物体
+    public Skill_SpawnObj[] spawnObjs;
+
     // 释放数据
     public Skill_ReleaseModel releaseModel;
 
@@ -61,6 +64,10 @@ public class Skill_HitModel
     public bool needChromaticAberration;
     // 命中效果
     public Conf_SkillHitEF skillHitEF;
+    // 播放粒子 / 产生游戏物体
+    public Skill_SpawnObj spawnObj;
+    // 播放音效
+    public AudioClip audioClip;
 }
 
 [Serializable]

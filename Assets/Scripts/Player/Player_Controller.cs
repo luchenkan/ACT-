@@ -4,6 +4,7 @@ using Cinemachine;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public enum PlayerState
 {
@@ -49,6 +50,23 @@ public class Player_Controller : FSMController<PlayerState>
             }
     }}
 
+    public int Hp { get => hp;
+        set {
+            hp = value;
+            if(value < 0)
+            {
+                hp = 0;
+                // 死亡事件
+            }
+
+            HPBarImg.fillAmount = hp / 100f;
+        }
+    }
+
+    // UI
+    private int hp = 100;
+    public Image HPBarImg;
+
     private void Start()
     {
         input = new Player_Input();
@@ -65,10 +83,38 @@ public class Player_Controller : FSMController<PlayerState>
         UpdateState<Player_Move>(PlayerState.Player_Move, true);
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        UpdateSkillCD();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Hp -= UnityEngine.Random.Range(1, 30);
+            Debug.Log(Hp);
+            Debug.Log(HPBarImg.fillAmount);
+        }
+    }
+
     public void PlayAudio(AudioClip clip)
     {
         audio.PlayOneShot(clip);
     }
+
+    /// <summary>
+    /// 更新技能CD时间
+    /// </summary>
+    public void UpdateSkillCD()
+    {
+        for(int i = 0; i < skillModels.Length; ++i)
+        {
+            skillModels[i].Update();
+        }
+    }
+
+    // 当前的技能编号
+    private int currSkillIndex = -1;
+
+    #region 战斗相关
 
     public bool CheckAttack()
     {
@@ -76,15 +122,17 @@ public class Player_Controller : FSMController<PlayerState>
         {
             CurrSkillData = attackConfs[CurrAttackIndex];
             attackAction = StandAttack;
+            currSkillIndex = -1;
             return true;
         }
 
         for(int i = 0; i < skillModels.Length; ++i)
         {
-            if(input.GetKeyDown(skillModels[i].keyCode) && model.canSwitch)
+            if(input.GetKeyDown(skillModels[i].keyCode) && model.canSwitch && skillModels[i].CanRelease)
             {
                 CurrSkillData = skillModels[i].skillData;
                 attackAction = SkillAttack;
+                currSkillIndex = i;
                 return true;
             }
         }
@@ -96,6 +144,10 @@ public class Player_Controller : FSMController<PlayerState>
     public void Attack()
     {
         attackAction?.Invoke();
+        if(currSkillIndex != -1)
+        {
+            skillModels[currSkillIndex].OnRelease();
+        }
     }
 
     private void StandAttack()
@@ -152,4 +204,6 @@ public class Player_Controller : FSMController<PlayerState>
             yield return null;
         }
     }
+
+    #endregion
 }

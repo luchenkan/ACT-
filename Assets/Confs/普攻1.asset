@@ -17,13 +17,14 @@ MonoBehaviour:
   overTriggerName: "\u653B\u51FB\u7ED3\u675F"
   cameraMoveModels: []
   characterMoveModels: []
+  spawnObjs: []
   releaseModel:
     spawnObj:
       prefab: {fileID: 0}
       audioClip: {fileID: 0}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
-    audioClip: {fileID: 8300000, guid: b2432d1254e131541b104851e2a54f7f, type: 3}
+    audioClip: {fileID: 0}
     canRotate: 1
   hitModels:
   - damageVal: 10
@@ -33,6 +34,12 @@ MonoBehaviour:
     needScreenImpulse: 1
     needChromaticAberration: 1
     skillHitEF: {fileID: 11400000, guid: 37cc87752a2d14b4f83f0561fb12a8ef, type: 2}
+    spawnObj:
+      prefab: {fileID: 0}
+      audioClip: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    audioClip: {fileID: 8300000, guid: b2432d1254e131541b104851e2a54f7f, type: 3}
   endModel:
     spawnObj:
       prefab: {fileID: 0}

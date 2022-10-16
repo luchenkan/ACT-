@@ -22,13 +22,14 @@ MonoBehaviour:
   characterMoveModels:
   - target: {x: 0, y: 0, z: 0.5}
     time: 0.2
+  spawnObjs: []
   releaseModel:
     spawnObj:
       prefab: {fileID: 0}
       audioClip: {fileID: 0}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
-    audioClip: {fileID: 8300000, guid: 2526231cfac8b144f872e951470d9acd, type: 3}
+    audioClip: {fileID: 0}
     canRotate: 1
   hitModels:
   - damageVal: 10
@@ -38,6 +39,12 @@ MonoBehaviour:
     needScreenImpulse: 1
     needChromaticAberration: 1
     skillHitEF: {fileID: 11400000, guid: 5e9ae3285decb5340b3706732a3b8dd6, type: 2}
+    spawnObj:
+      prefab: {fileID: 0}
+      audioClip: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    audioClip: {fileID: 8300000, guid: 2526231cfac8b144f872e951470d9acd, type: 3}
   endModel:
     spawnObj:
       prefab: {fileID: 0}
