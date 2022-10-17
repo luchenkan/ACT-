@@ -77,17 +77,21 @@
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\CFX_Demo_RandomDir.cs" />
     <Compile Include="Assets\Scripts\Monster\Monster_Model.cs" />
     <Compile Include="Assets\Scripts\Conf\Conf_SkillHitEF.cs" />
-    <Compile Include="Assets\Scripts\Player\Player_Audio.cs" />
-    <Compile Include="Assets\Scripts\Player\Player_Move.cs" />
+    <Compile Include="Assets\Scripts\Base\AudioController.cs" />
+    <Compile Include="Assets\Scripts\Player\State\Player_Move.cs" />
     <Compile Include="Assets\Scripts\PostProcessingManager.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\Conf\Conf_SkillData.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Model.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\WFX_Demo_Wall.cs" />
     <Compile Include="Assets\Scripts\Conf\SkillModel.cs" />
-    <Compile Include="Assets\Scripts\Player\Player_Attack.cs" />
+    <Compile Include="Assets\Scripts\Player\State\Player_Attack.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\WFX_Demo_New.cs" />
+    <Compile Include="Assets\Scripts\Base\Character_Controller.cs" />
+    <Compile Include="Assets\Scripts\Base\Character_Model.cs" />
+    <Compile Include="Assets\Scripts\Player\State\Player_StateBase.cs" />
+    <Compile Include="Assets\Scripts\Monster\State\Monster_StateBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art\GroundScenes\Casual Tiny Environment - Jungle Set\Readme.txt" />

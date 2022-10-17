@@ -9,10 +9,13 @@ public abstract class StateBase<T>
     // µ±Ç°×´Ì¬
     public T stateType;
 
-    public virtual void Init(T state,FSMController<T> controller)
+    public void Init(T state,FSMController<T> controller)
     {
-        this.stateType = state;
+        stateType = state;
+        OnInit(state, controller);
     }
+
+    protected virtual void OnInit(T state, FSMController<T> controller) { }
 
     public abstract void OnEnter();
 

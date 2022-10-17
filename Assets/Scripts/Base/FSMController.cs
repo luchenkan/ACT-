@@ -46,6 +46,7 @@ public abstract class FSMController<T> : MonoBehaviour
 
     protected virtual void Update()
     {
+        Debug.Log($"µ±Ç°×´Ì¬{curStateObject}");
         if (curStateObject != null)
         {
             curStateObject.OnUpdate();

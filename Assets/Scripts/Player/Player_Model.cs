@@ -5,32 +5,9 @@ using UnityEngine;
 /// <summary>
 /// 控制模型相关的动作等
 /// </summary>
-public class Player_Model : MonoBehaviour
+public class Player_Model : Character_Model<PlayerState>
 {
     private Player_Controller player;
-    private Animator animator;
-    public WeaponCollider[] boxColliders;
-
-    // 当前技能数据
-    private Conf_SkillData skillData;
-
-    // 是否可以切换普攻阶段(默认为true是从待机到攻击默认是可以转换的)
-    public bool canSwitch { get; private set; } = true;
-
-    public void Init(Player_Controller player)
-    {
-        this.player = player;
-        animator = GetComponent<Animator>();
-        for(int i = 0; i < boxColliders.Length; ++i)
-        {
-            boxColliders[i].Init(this);
-        }
-    }
-
-    public void PlayAudio(AudioClip audioClip)
-    {
-        player.PlayAudio(audioClip);
-    }
 
     public void UpdateMove(float x,float y)
     {
@@ -39,75 +16,13 @@ public class Player_Model : MonoBehaviour
         animator.SetFloat("前后", y);
     }
 
-    public void Attack(Conf_SkillData conf)
+    public override void Init(Character_Controller<PlayerState> character)
     {
-        currHitIndex = 0;
-        skillData = conf;
-        canSwitch = false;
-        animator.SetTrigger(conf.triggerName);
-
-        /////////注意此处属于释放时的技能
-        // 单次攻击生成
-        SpawnObject(skillData.releaseModel.spawnObj);
-        // 音效
-        PlayAudio(skillData.releaseModel.audioClip);
-    }
-
-    public void SpawnObject(Skill_SpawnObj spawn)
-    {
-        if (spawn != null && spawn.prefab != null)
-        {
-            var temp = GameObject.Instantiate(spawn.prefab, null);
-            var tranform = temp.transform;
-            tranform.position = tranform.position + spawn.position;
-            transform.eulerAngles = player.transform.eulerAngles + spawn.rotation; // 以玩家位置为基准
-            PlayAudio(spawn.audioClip);
-        }
+        base.Init(character);
+        player = character as Player_Controller;
     }
 
     #region 动画事件调用
-
-    private void SkillOver(string skillName)
-    {
-        if(skillName != skillData.name)
-        {
-            return;
-        }
-        // 基于结束配置，生成一些事物
-        SpawnObject(skillData.endModel.spawnObj);
-        canSwitch = true;
-        animator.SetTrigger(skillData.overTriggerName);
-        player.CurrAttackIndex = 0;
-        player.UpdateState<Player_Move>(PlayerState.Player_Move);
-    }
-
-    private int currHitIndex = 0;
-    private void StartSkillHit(int weaponIndex)
-    {
-        // 开启伤害检测
-        boxColliders[weaponIndex].StartSkillHit(skillData.hitModels[currHitIndex]);
-
-        // 单次攻击生成
-        SpawnObject(skillData.hitModels[currHitIndex].spawnObj);
-
-        // 音效
-        PlayAudio(skillData.hitModels[currHitIndex].audioClip);
-
-        ++currHitIndex;
-    }
-
-    private void StopSkillHit(int weaponIndex)
-    {
-        boxColliders[weaponIndex].StopSkillHit();
-    }
-
-    /// <summary>
-    /// 普攻阶段切换
-    /// </summary>
-    private void SkillCanSwitch()
-    {
-        canSwitch = true;
-    }
 
     /// <summary>
     /// 相机移动，基于index位的位移效果
@@ -115,23 +30,11 @@ public class Player_Model : MonoBehaviour
     /// <param name="index"></param>
     private void CameraMoveForAttack(int index)
     {
+        if (index >= skillData.cameraMoveModels.Length)
+            return;
+
         var model = skillData.cameraMoveModels[index];
         player.CameraMoveForAttack(model.target, model.time, model.backTime);
-    }
-
-    private void CharacterMoveForAttack(int index)
-    {
-        var model = skillData.characterMoveModels[index];
-        player.CharacterAttackMove(model.target, model.time);
-    }
-
-    /// <summary>
-    /// 生成游戏对象（具体某一个索引）
-    /// </summary>
-    /// <param name="index"></param>
-    private void SpawnObj(int index)
-    {
-        SpawnObject(skillData.spawnObjs[index]);
     }
 
     #endregion
@@ -142,5 +45,11 @@ public class Player_Model : MonoBehaviour
     public void ScreenImpulse()
     {
         player.ScreenImpluse();
+    }
+
+    protected override void OnSkillOver()
+    {
+        player.CurrAttackIndex = 0;
+        player.UpdateState<Player_Move>(PlayerState.Player_Move);
     }
 }

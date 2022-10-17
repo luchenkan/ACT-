@@ -6,14 +6,14 @@ public class WeaponCollider : MonoBehaviour
     public BoxCollider boxCollider;
     public MeleeWeaponTrail meleeWeaponTrail;
 
-    private List<GameObject> monsterList = new List<GameObject>();
+    private List<GameObject> enemyList = new List<GameObject>();
 
-    private Player_Model model;
+    private Character_Model model;
 
     // 当前技能的命中数据
     private Skill_HitModel hitModel;
 
-    public void Init(Player_Model model)
+    public void Init(Character_Model model)
     {
         this.model = model;
         StopSkillHit();
@@ -29,16 +29,16 @@ public class WeaponCollider : MonoBehaviour
     public void StopSkillHit()
     {
         boxCollider.enabled = false;
-        monsterList.Clear();
+        enemyList.Clear();
         meleeWeaponTrail.Emit = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Monster" && !monsterList.Contains(other.gameObject))
+        if(model.EnemyTargetNames.Contains(other.tag) && !enemyList.Contains(other.gameObject))
         {
             // 伤害决定
-            monsterList.Add(other.gameObject);
+            enemyList.Add(other.gameObject);
             // 处理该次伤害逻辑
             other.GetComponent<Monster_Controller>().Hurt(hitModel.hardTime, model.transform, hitModel.repelVelocity, hitModel.repelTransitionTime, hitModel.damageVal);
             if (hitModel.skillHitEF != null)
@@ -52,16 +52,22 @@ public class WeaponCollider : MonoBehaviour
                 }
             }
 
-            // 震动
-            if(hitModel.needScreenImpulse)
+            if(model is Player_Model)
             {
-                model.ScreenImpulse();
+                var player_model = model as Player_Model;
+                // 震动
+                if (hitModel.needScreenImpulse)
+                {
+                    player_model.ScreenImpulse();
+                }
+
+                if (hitModel.needChromaticAberration)
+                {
+                    PostProcessingManager.Instance.ChromaticAberrationEF(); // 这个地方我觉得直接调单例类是可以的
+                }
             }
 
-            if(hitModel.needChromaticAberration)
-            {
-                PostProcessingManager.Instance.ChromaticAberrationEF(); // 这个地方我觉得直接调单例类是可以的
-            }
+            model.SpawnObject(hitModel.spawnObj);
         }
     }
 
