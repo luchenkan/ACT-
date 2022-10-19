@@ -11,7 +11,6 @@ public class Player_Model : Character_Model<PlayerState>
 
     public void UpdateMove(float x,float y)
     {
-
         animator.SetFloat("×óÓÒ", x);
         animator.SetFloat("Ç°ºó", y);
     }

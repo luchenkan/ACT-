@@ -53,7 +53,15 @@ public class Player_Controller : Character_Controller<PlayerState>
             HPBarImg.fillAmount = hp / 100f;
         }
     }
+
+    public static Player_Controller Instance;
+
     public Image HPBarImg;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     protected override void Start()
     {

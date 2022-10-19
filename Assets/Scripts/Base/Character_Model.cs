@@ -92,6 +92,11 @@ public class Character_Model<T> : Character_Model
         animator.SetTrigger("受伤结束");
     }
 
+    public void SetAnimation(string name,bool flag)
+    {
+        animator.SetBool(name, flag);
+    }
+
     #region 动画事件调用
 
     /// <summary>

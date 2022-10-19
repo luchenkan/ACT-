@@ -28,6 +28,7 @@ public abstract class FSMController<T> : MonoBehaviour
             curStateObject.OnLeave();
         }
 
+        curState = state;
         curStateObject = GetSateObject<K>(state); // 这里的k类似Player_Move
         curStateObject.OnEnter();
     }
@@ -46,7 +47,6 @@ public abstract class FSMController<T> : MonoBehaviour
 
     protected virtual void Update()
     {
-        Debug.Log($"当前状态{curStateObject}");
         if (curStateObject != null)
         {
             curStateObject.OnUpdate();
