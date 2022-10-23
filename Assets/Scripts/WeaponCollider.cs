@@ -40,7 +40,7 @@ public class WeaponCollider : MonoBehaviour
             // 伤害决定
             enemyList.Add(other.gameObject);
             // 处理该次伤害逻辑
-            other.GetComponent<Monster_Controller>().Hurt(hitModel.hardTime, model.transform, hitModel.repelVelocity, hitModel.repelTransitionTime, hitModel.damageVal);
+            other.GetComponent<HurtEnter>().Hurt(hitModel.hardTime, model.transform, hitModel.repelVelocity, hitModel.repelTransitionTime, hitModel.damageVal);
             if (hitModel.skillHitEF != null)
             {
                 // 生成粒子 ClosestPointOnBounds是获取这个坐标和触发器的碰撞点

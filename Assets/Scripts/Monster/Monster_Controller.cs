@@ -9,22 +9,16 @@ public enum MonsterState
     Monster_Move,
     Monster_Idle,
     Monster_Attack,
-    Monster_Hurt,
-    Monster_Dead,
+    Monster_Hurt
 }
 
 public class Monster_Controller : Character_Controller<MonsterState>
 {
-    // 是否被打
-    private bool isHurt;
-    // 打击力量(描述击退程度)
-    private Vector3 hurtForce;
-    // 打击时间
-    private float hurtTime;
-    // 当前时间
-    private float curHurtTime;
     // 导航组件
     private NavMeshAgent navMeshAgent;
+
+    // 移动的变量
+    public Vector3 moveMotion = new Vector3(0, -9, 0);
 
     public override int Hp { get => hp; set => hp = value; }
 
@@ -41,23 +35,21 @@ public class Monster_Controller : Character_Controller<MonsterState>
     {
         base.Update();
 
-        if (navMeshAgent == true)
+        if (isDead)
+        {
+            characterController.Move(moveMotion * Time.deltaTime);
+            return;
+        }
+
+        if (navMeshAgent.enabled == true)
             return;
 
-        if(isHurt)
-        {
-            curHurtTime += Time.deltaTime;
-            characterController.Move(hurtForce * Time.deltaTime / hurtTime);
-            if(curHurtTime >= hurtTime)
-            {
-                isHurt = false;
-            }
-        }
-        else
-        {
-            // 此处只是为了模拟重力
-            characterController.Move(new Vector3(0, -9, 0) * Time.deltaTime);
-        }
+        characterController.Move(moveMotion * Time.deltaTime);
+    }
+
+    public void StopRepel()
+    {
+        moveMotion.Set(0, -9, 0);
     }
 
     #region 导航
@@ -81,15 +73,49 @@ public class Monster_Controller : Character_Controller<MonsterState>
 
     #region 战斗逻辑
 
+    protected override void OnHurtOver()
+    {
+        UpdateState<Monster_Idle>(MonsterState.Monster_Idle);
+    }
+
     protected override void OnHurt(Transform sourceTran, Vector3 repelVelocity, float repelTransition)
     {
-        base.OnHurt(sourceTran, repelVelocity, repelTransition);
+        UpdateState<Monster_Hurt>(MonsterState.Monster_Hurt, true);
+        (curStateObject as Monster_Hurt).SetData(sourceTran, repelVelocity, repelTransition);
+    }
 
-        // 击退 击飞
-        isHurt = true;
-        hurtForce = sourceTran.TransformDirection(repelVelocity);
-        hurtTime = repelTransition;
-        curHurtTime = 0;
+    protected override void OnDead()
+    {
+        StopRepel();
+        UpdateState<Monster_Idle>(MonsterState.Monster_Idle);
+        StopMove();
+        Destroy(GetComponent<CapsuleCollider>());
+        //Destroy(GetComponent<CharacterController>());
+        Invoke("Destroy", 3);
+    }
+
+    private void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    public bool Attack()
+    {
+        if (!model.canSwitch)
+            return false;
+
+         // 有什么技能放什么技能
+         for(int i = 0; i < skillModels.Length; ++i)
+        {
+            if (skillModels[i].CanRelease)
+            {
+                CurrSkillData = skillModels[i].skillData;
+                model.Attack(CurrSkillData);
+                skillModels[i].OnRelease();
+                return true;
+            }
+        }
+        return false;
     }
 
     #endregion

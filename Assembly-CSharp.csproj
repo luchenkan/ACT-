@@ -90,13 +90,14 @@
     <Compile Include="Assets\Scripts\Base\Character_Model.cs" />
     <Compile Include="Assets\Scripts\Monster\State\Monster_Hurt.cs" />
     <Compile Include="Assets\Scripts\Conf\SkillModel.cs" />
-    <Compile Include="Assets\Scripts\Monster\State\Monster_Dead.cs" />
+    <Compile Include="Assets\Scripts\HurtEnter.cs" />
     <Compile Include="Assets\Scripts\Player\State\Player_Attack.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Scripts\Monster\State\Monster_StateBase.cs" />
     <Compile Include="Assets\Scripts\Monster\State\Monster_Idle.cs" />
     <Compile Include="Assets\Art\JMO par Assets\WarFX\Demo\Assets\WFX_Demo_New.cs" />
     <Compile Include="Assets\Scripts\Player\State\Player_StateBase.cs" />
+    <Compile Include="Assets\Scripts\Player\State\Player_Hurt.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art\GroundScenes\Casual Tiny Environment - Jungle Set\Readme.txt" />

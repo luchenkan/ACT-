@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class Monster_Attack : Monster_StateBase
 {
+    // ÊÇ·ñ¹¥»÷
+    private bool isAttack;
     public override void OnEnter()
     {
-        throw new System.NotImplementedException();
+        monster.StopMove();
+        isAttack = false;
     }
 
     public override void OnLeave()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void OnUpdate()
     {
-        throw new System.NotImplementedException();
+        if(!isAttack && !player.isDead)
+        {
+            isAttack = monster.Attack();
+        }
     }
 }

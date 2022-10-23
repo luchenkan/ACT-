@@ -11,6 +11,7 @@ public abstract class Character_Controller<T> : FSMController<T>
     // 生命值
     protected int hp = 100;
     public abstract int Hp { set; get; }
+    public bool isDead { get; protected set; } = false;
 
     // 技能数据
     public SkillModel[] skillModels;
@@ -21,6 +22,13 @@ public abstract class Character_Controller<T> : FSMController<T>
         characterController = GetComponent<CharacterController>();
         model = transform.Find("Model").GetComponent<Character_Model<T>>();
         model.Init(this);
+        gameObject.AddComponent<HurtEnter>().action = Hurt;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        UpdateSkillCD();
     }
 
     /// <summary>
@@ -45,9 +53,6 @@ public abstract class Character_Controller<T> : FSMController<T>
 
     #region 战斗相关
 
-    // 当前的技能编号
-    protected int currSkillIndex = -1;
-
     // 当前技能
     public Conf_SkillData CurrSkillData { get; protected set; }
 
@@ -58,7 +63,7 @@ public abstract class Character_Controller<T> : FSMController<T>
     {
         StartCoroutine(DoCharacterAttackMove(transform.TransformDirection(target), time));
     }
-    IEnumerator DoCharacterAttackMove(Vector3 target, float time)
+    protected IEnumerator DoCharacterAttackMove(Vector3 target, float time)
     {
         float currTime = 0;
         while (currTime < time)
@@ -74,22 +79,45 @@ public abstract class Character_Controller<T> : FSMController<T>
 
     public void Hurt(float hardTime, Transform sourceTran, Vector3 repelVelocity, float repelTransition, int damageVal)
     {
-        // 仅动画
-        model.PlayHurtAnimation();
-        CancelInvoke("HurtOver");
-        Invoke("HurtOver", hardTime); // 延迟调用
+        if (isDead) return;
 
-        OnHurt(sourceTran, repelVelocity, repelTransition);
+        Hp -= damageVal;
+        if(Hp <= 0)
+        {
+            Dead();
+        }
+        else
+        {
+            // 仅动画
+            model.PlayHurtAnimation(repelVelocity.y > 0.5f);
+            CancelInvoke("HurtOver");
+            Invoke("HurtOver", hardTime); // 延迟调用
 
-        hp -= damageVal;
+            OnHurt(sourceTran, repelVelocity, repelTransition);
+        }
+       
+        // 如果释放技能到一半了，如何重置或者打断武器的刀光特效，技能释放等等
+        model.SkillCanSwitch();
+        model.ResetWeapon();
     }
 
-    protected virtual void OnHurt(Transform sourceTran, Vector3 repelVelocity, float repelTransition) { }
+    protected abstract void OnHurt(Transform sourceTran, Vector3 repelVelocity, float repelTransition);
 
     public void HurtOver()
     {
         model.StopHurtAnimation();
+        OnHurtOver();
     }
+
+    protected abstract void OnHurtOver();
+
+    private void Dead()
+    {
+        isDead = true;
+        model.PlayDeadAnimation();
+        OnDead();
+    }
+    protected abstract void OnDead();
 
     #endregion
 }

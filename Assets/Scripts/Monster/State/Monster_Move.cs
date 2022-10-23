@@ -18,13 +18,20 @@ public class Monster_Move : Monster_StateBase
 
     public override void OnUpdate()
     {
+        if (player.isDead)
+        {
+            monster.UpdateState<Monster_Idle>(MonsterState.Monster_Idle);
+            return;
+        }
+
         monster.SetNavigationTarget(player.transform.position);
         // ºÏ≤‚æ‡¿Î
         var dis = Vector3.Distance(player.transform.position, monster.transform.position);
         if (dis < 1)
         {
             // «–ªªπ•ª˜◊¥Ã¨
-            // return;
+            monster.UpdateState<Monster_Attack>(MonsterState.Monster_Attack);
+            return;
         }
         else if (dis > 6)
         {

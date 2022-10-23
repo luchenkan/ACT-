@@ -11,6 +11,7 @@ public enum PlayerState
     None,
     Player_Move,
     Player_Attack,
+    Player_Hurt,
 }
 
 public class Player_Controller : Character_Controller<PlayerState>
@@ -82,7 +83,8 @@ public class Player_Controller : Character_Controller<PlayerState>
         UpdateSkillCD();
     }
 
-
+    // 当前的技能编号
+    private int currSkillIndex = -1;
     #region 战斗相关
 
     public bool CheckAttack()
@@ -152,6 +154,40 @@ public class Player_Controller : Character_Controller<PlayerState>
         cameraTarget.DOLocalMove(cameraPos + offset, time).onComplete = () => {
             cameraTarget.DOLocalMove(cameraPos,backTime);
         };
+    }
+
+    #endregion
+
+    #region 受伤
+
+    /// <summary>
+    /// 受伤处理
+    /// </summary>
+    /// <param name="sourceTran"></param>
+    /// <param name="repelVelocity"></param>
+    /// <param name="repelTransition"></param>
+    protected override void OnHurt(Transform sourceTran, Vector3 repelVelocity, float repelTransition)
+    {
+        currAttackIndex = 0; // 如果是在技能或者普攻被打断的情况，就会出现数组越界
+        UpdateState<Player_Hurt>(PlayerState.Player_Hurt, true);
+        (curStateObject as Player_Hurt).SetData(sourceTran, repelVelocity, repelTransition);
+    }
+
+    protected override void OnHurtOver()
+    {
+        UpdateState<Player_Move>(PlayerState.Player_Move);
+    }
+
+    protected override void OnDead()
+    {
+        UpdateState<Player_Move>(PlayerState.Player_Move);
+        characterController.enabled = false;
+    }
+
+    // 角色击飞/击退移动
+    public void RepelMove(Transform sourceTran, Vector3 target, float time)
+    {
+        StartCoroutine(DoCharacterAttackMove(sourceTran.TransformDirection(target), time));
     }
 
     #endregion

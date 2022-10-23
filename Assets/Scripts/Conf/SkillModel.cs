@@ -16,17 +16,20 @@ public class SkillModel
     public bool CanRelease { get; private set; } = true;
     public void Update()
     {
-        if(!CanRelease && currTime >= 0)
+        if(!CanRelease && currTime > 0)
         {
             // ²»ÄÜÊÍ·Å
             currTime -= Time.deltaTime;
-            if(currTime < 0)
+            if(currTime <= 0)
             {
                 currTime = 0;
                 CanRelease = true;
             }
 
-            CDImage.fillAmount = currTime / CDTime;
+            if(CDImage)
+            {
+                CDImage.fillAmount = currTime / CDTime;
+            }
         }
     }
 

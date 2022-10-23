@@ -10,11 +10,11 @@ public abstract class Character_Model : MonoBehaviour
     public List<string> EnemyTargetNames;
 }
 
-public class Character_Model<T> : Character_Model
+public abstract class Character_Model<T> : Character_Model
 {
     protected Character_Controller<T> character;
     protected Animator animator;
-    public WeaponCollider[] boxColliders;
+    public WeaponCollider[] weaponColliders;
 
     // 当前技能数据
     protected Conf_SkillData skillData;
@@ -26,9 +26,9 @@ public class Character_Model<T> : Character_Model
     {
         this.character = character;
         animator = GetComponent<Animator>();
-        for (int i = 0; i < boxColliders.Length; ++i)
+        for (int i = 0; i < weaponColliders.Length; ++i)
         {
-            boxColliders[i].Init(this);
+            weaponColliders[i].Init(this);
         }
     }
 
@@ -74,16 +74,28 @@ public class Character_Model<T> : Character_Model
     }
 
     private int currHurtAnimationIndex = 1;
-    public void PlayHurtAnimation()
+    public void PlayHurtAnimation(bool isFloat = false)
     {
-        animator.SetTrigger("受伤" + currHurtAnimationIndex);
-        if (currHurtAnimationIndex == 1)
+        if(skillData != null)
         {
-            currHurtAnimationIndex = 2;
+            animator.ResetTrigger(skillData.triggerName); // 有一个逻辑与动画的打断问题
+        }
+
+        if (isFloat)
+        {
+            animator.SetTrigger("击飞");
         }
         else
         {
-            currHurtAnimationIndex = 1;
+            animator.SetTrigger("受伤" + currHurtAnimationIndex);
+            if (currHurtAnimationIndex == 1)
+            {
+                currHurtAnimationIndex = 2;
+            }
+            else
+            {
+                currHurtAnimationIndex = 1;
+            }
         }
     }
 
@@ -97,12 +109,25 @@ public class Character_Model<T> : Character_Model
         animator.SetBool(name, flag);
     }
 
+    public void PlayDeadAnimation()
+    {
+        animator.SetTrigger("死亡");
+    }
+
+    public void ResetWeapon()
+    {
+        for(int i = 0; i < weaponColliders.Length; ++i)
+        {
+            weaponColliders[i].StopSkillHit();
+        }
+    }
+
     #region 动画事件调用
 
     /// <summary>
     /// 普攻阶段切换
     /// </summary>
-    private void SkillCanSwitch()
+    public void SkillCanSwitch()
     {
         canSwitch = true;
     }
@@ -132,7 +157,7 @@ public class Character_Model<T> : Character_Model
     private void StartSkillHit(int weaponIndex)
     {
         // 开启伤害检测
-        boxColliders[weaponIndex].StartSkillHit(skillData.hitModels[currHitIndex]);
+        weaponColliders[weaponIndex].StartSkillHit(skillData.hitModels[currHitIndex]);
 
         // 单次攻击生成
         SpawnObject(skillData.hitModels[currHitIndex].spawnObj);
@@ -145,10 +170,10 @@ public class Character_Model<T> : Character_Model
 
     private void StopSkillHit(int weaponIndex)
     {
-        boxColliders[weaponIndex].StopSkillHit();
+        weaponColliders[weaponIndex].StopSkillHit();
     }
 
-    protected virtual void OnSkillOver() { }
+    protected abstract void OnSkillOver();
 
     #endregion
 }
